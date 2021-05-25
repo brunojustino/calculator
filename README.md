@@ -1,0 +1,1 @@
+This project is part of THe Odin Project fundamentals course.
