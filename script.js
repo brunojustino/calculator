@@ -13,15 +13,38 @@ let signIsPressed = false
 
 buttons.forEach((b) => {
     b.addEventListener("click", () => {
-        if(signIsPressed){
-            if(/^[0-9]$/gm.test(parseInt(b.id))){
-                calcLineDisplay2 += b.id;
+        // add numbers to variables and display it
+        if(signIsPressed){   // se tiver com operador adiciona segundo campo
+            if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "."){
+              console.log("2 = " + calcLineDisplay2)
+              if(calcLineDisplay2.indexOf(".") == -1){      // só adiciona ponto se não existir
+                calcLineDisplay2 += b.value;
                 calcLine2.innerText = calcLineDisplay2
+              } else {
+                if(b.value == "."){
+                  calcLine2.innerText = calcLineDisplay2
+                } else{
+                  calcLineDisplay2 += b.value;
+                  calcLine2.innerText = calcLineDisplay2
+                }
+              }
             }
-        } else if(/^[0-9]$/gm.test(parseInt(b.id))){
-            calcLineDisplay += b.id;
+        } else if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "."){ // adiciona primeiro campo
+          console.log("1 = " + calcLineDisplay)
+          if(calcLineDisplay.indexOf(".") == -1){          // só adiciona ponto se não existir
+            calcLineDisplay += b.value;
             calcLine.innerText = calcLineDisplay
+          } else {
+            if(b.value == ".") {
+              calcLine.innerText = calcLineDisplay
+            } else {
+              calcLineDisplay += b.value;
+              calcLine.innerText = calcLineDisplay
+            }
+            
+          }
         }
+        //add sign
         if(/^minus|plus|multiply|divide$/gm.test(b.id)){
             signLineDisplay = b.value;
             signLine.innerText = signLineDisplay

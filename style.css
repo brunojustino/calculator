@@ -12,6 +12,7 @@ body{
     font-size: 1.2rem;
     border: 8px solid rgb(38, 74, 75);
     height: 100vh;
+    display: grid;
 }
 
 .grid-container{
@@ -50,21 +51,22 @@ body{
     grid-area: result;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-content: space-between;
+    justify-content: center;
+    align-content: center;
     align-items: center;
     width: 60vw;
     background-color: rgba(219, 219, 219, 0.877);
     border: 1px solid rgba(0, 0, 0, 0.692);
     margin-bottom: 5px;
-
+    min-height: 7vh;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .display p {
     flex: 1 1 auto;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
+
 .line1{
     grid-area: line1;
 }
@@ -88,5 +90,6 @@ body{
     grid-area: footer;
     align-self: end;
     bottom: 0;
+    margin-bottom: 8px;
 }
 
