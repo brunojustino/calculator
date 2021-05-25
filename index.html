@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> 
 </head>
 <body>
 <div class="grid-container">
     <div class="display flex">
-        <p id="calcLine"></p>
-        <p id="resultLine"></p>
+        <p><span id="calcLine"></span> <span id="signLine"></span> <span id="calcLine2"></span></p>
+        <p><span id="resultLine">=</span></p>
     </div>
     <div class="line1 flex">
         <button id="ce" class="btn">CE</button>
@@ -23,29 +25,29 @@
         <button id="7" class="btn">7</button>
         <button id="8" class="btn">8</button>
         <button id="9" class="btn">9</button>
-        <button id="plus" class="btn">+</button>
+        <button id="plus" value="+" class="btn">+</button>
     </div>
     <div class="line3 flex">
         <button id="4" class="btn">4</button>
         <button id="5" class="btn">5</button>
         <button id="6" class="btn">6</button>
-        <button id="minus" class="btn">-</button>
+        <button id="minus" value="-" class="btn">-</button>
     </div>
     <div class="line4 flex">
         <button id="1" class="btn">1</button>
         <button id="2" class="btn">2</button>
         <button id="3" class="btn">3</button>
-        <button id="multiply"class="btn">*</button>
+        <button id="multiply" value="*" class="btn">*</button>
     </div>
     <div class="line5 flex">
         <button id="sign" class="btn">+/-</button>
         <button id="0" class="btn">0</button>
         <button id="dot" class="btn">.</button>
-        <button id="divide" class="btn">/</button>
+        <button id="divide" value="/" class="btn">/</button>
     </div>
     <div class="footer">footer</div>
 </div>
-    
+
 <script src="script.js"></script>
 </body>
 </html>
