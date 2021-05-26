@@ -6,6 +6,7 @@ const resultLine = document.getElementById('resultLine')
 let calcLineDisplay = ""
 let calcLineDisplay2 = ""
 let resultLineDisplay = ""
+let oldResult = ""
 let signLineDisplay = ""
 let signPressed = ""
 let signIsPressed = false
@@ -13,6 +14,28 @@ let signIsPressed = false
 
 buttons.forEach((b) => {
     b.addEventListener("click", () => {
+      if(resultLineDisplay !== ""){ // se ja tiver resultado na tela, joga ele para ser o primeiro valor e continuar a conta com um segundo valor
+        console.log("dentro do result" + oldResult)
+        clearAll()
+        calcLineDisplay = oldResult.toString()
+        calcLine.innerText = calcLineDisplay
+      }
+
+      if(b.id == "clean"){ // botao para limpar ultimo valor digitado
+        if(calcLineDisplay2 !== ""){
+          calcLineDisplay2 = calcLineDisplay2.slice(0, -1)
+          calcLine2.innerText = calcLineDisplay2
+        } else if(signIsPressed){
+          signLine.innerText = ""
+          signIsPressed = false
+        }        
+        else {
+          if(calcLineDisplay !== ""){
+            calcLineDisplay = calcLineDisplay.slice(0, -1)
+            calcLine.innerText = calcLineDisplay
+          }
+        }
+      }
         // add numbers to variables and display it
         if(signIsPressed){   // se tiver com operador adiciona segundo campo
             if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "."){
@@ -46,13 +69,16 @@ buttons.forEach((b) => {
         }
         //add sign
         if(/^minus|plus|multiply|divide$/gm.test(b.id)){
+          if(calcLine.innerText !== ""){ // só adiciona a operacao se tiver sido digitado o primeiro numero
             signLineDisplay = b.value;
             signLine.innerText = signLineDisplay
             signIsPressed = true
-        }
+        }}
         if(b.id == "result"){
             if(calcLineDisplay && calcLineDisplay2 && signIsPressed){
-                resultLine.innerText = calc(Number(calcLineDisplay),Number(calcLineDisplay2),signLineDisplay)
+                resultLineDisplay = calc(Number(calcLineDisplay),Number(calcLineDisplay2),signLineDisplay)
+                resultLine.innerText = resultLineDisplay
+                oldResult = resultLineDisplay;
             }
         } // end if result
         if(b.id == "c"){

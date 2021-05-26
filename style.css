@@ -71,6 +71,17 @@ body{
     grid-area: line1;
 }
 
+#c{
+    width: 20vw;
+}
+#clean{
+    width: 20vw;
+}
+#result{
+    width: 20vw;
+}
+
+
 .line2{
     grid-area: line2;
 }
