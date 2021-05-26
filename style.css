@@ -99,8 +99,9 @@ body{
 
 .footer{
     grid-area: footer;
-    align-self: end;
-    bottom: 0;
-    margin-bottom: 8px;
+    align-self: center;
+    margin-bottom: 5%;
+    font-size: 0.8em;
+    padding: 2%;
 }
 
