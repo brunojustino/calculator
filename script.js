@@ -14,14 +14,17 @@ let signIsPressed = false
 
 buttons.forEach((b) => {
     b.addEventListener("click", () => {
-      if(resultLineDisplay !== ""){ // se ja tiver resultado na tela, joga ele para ser o primeiro valor e continuar a conta com um segundo valor
+      // se ja tiver resultado na tela, joga ele para ser o primeiro valor e continuar a conta com um segundo valor
+      if(resultLineDisplay !== ""){ 
         console.log("dentro do result" + oldResult)
         clearAll()
         calcLineDisplay = oldResult.toString()
         calcLine.innerText = calcLineDisplay
       }
 
-      if(b.id == "clean"){ // botao para limpar ultimo valor digitado
+
+      // botao para limpar ultimo valor digitado
+      if(b.id == "clean"){ 
         if(calcLineDisplay2 !== ""){
           calcLineDisplay2 = calcLineDisplay2.slice(0, -1)
           calcLine2.innerText = calcLineDisplay2
@@ -36,11 +39,13 @@ buttons.forEach((b) => {
           }
         }
       }
+
         // add numbers to variables and display it
         if(signIsPressed){   // se tiver com operador adiciona segundo campo
-            if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "."){
+            if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "." || b.id == "sign"){
               console.log("2 = " + calcLineDisplay2)
-              if(calcLineDisplay2.indexOf(".") == -1){      // só adiciona ponto se não existir
+
+              if(calcLineDisplay2.indexOf(".") == -1){    // só adiciona ponto se não existir  
                 calcLineDisplay2 += b.value;
                 calcLine2.innerText = calcLineDisplay2
               } else {
@@ -52,8 +57,18 @@ buttons.forEach((b) => {
                 }
               }
             }
-        } else if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "."){ // adiciona primeiro campo
+        } else if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "." || b.id == "sign"){ // adiciona primeiro campo
           console.log("1 = " + calcLineDisplay)
+          if(b.id == "sign"){ // troca sinal
+            if(calcLineDisplay.charAt(0) == "-"){
+              calcLineDisplay = calcLineDisplay.substring(1, calcLineDisplay.length)
+              calcLine.innerText = calcLineDisplay
+            } else if(calcLineDisplay.charAt(0) !== "-"){
+              calcLineDisplay = "-" + calcLineDisplay
+              calcLine.innerText = calcLineDisplay
+            }
+          }// sign end
+
           if(calcLineDisplay.indexOf(".") == -1){          // só adiciona ponto se não existir
             calcLineDisplay += b.value;
             calcLine.innerText = calcLineDisplay
@@ -74,7 +89,8 @@ buttons.forEach((b) => {
             signLine.innerText = signLineDisplay
             signIsPressed = true
         }}
-        if(b.id == "result"){
+        // resultado
+        if(b.id == "result"){ 
             if(calcLineDisplay && calcLineDisplay2 && signIsPressed){
                 resultLineDisplay = calc(Number(calcLineDisplay),Number(calcLineDisplay2),signLineDisplay)
                 resultLine.innerText = resultLineDisplay
