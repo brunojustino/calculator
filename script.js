@@ -13,96 +13,104 @@ let signIsPressed = false
 //console.log(buttons)
 
 buttons.forEach((b) => {
-    b.addEventListener("click", () => {
-      // se ja tiver resultado na tela, joga ele para ser o primeiro valor e continuar a conta com um segundo valor
-      if(resultLineDisplay !== ""){ 
-        console.log("dentro do result" + oldResult)
+    b.addEventListener("click", () => {     
+      if(resultLineDisplay !== ""){  // se ja tiver resultado na tela, joga ele para ser o primeiro valor e continuar a conta com um segundo valor
         clearAll()
         calcLineDisplay = oldResult.toString()
         calcLine.innerText = calcLineDisplay
       }
-
-
-      // botao para limpar ultimo valor digitado
-      if(b.id == "clean"){ 
-        if(calcLineDisplay2 !== ""){
-          calcLineDisplay2 = calcLineDisplay2.slice(0, -1)
-          calcLine2.innerText = calcLineDisplay2
-        } else if(signIsPressed){
-          signLine.innerText = ""
-          signIsPressed = false
-        }        
-        else {
-          if(calcLineDisplay !== ""){
-            calcLineDisplay = calcLineDisplay.slice(0, -1)
-            calcLine.innerText = calcLineDisplay
-          }
-        }
+      if(b.id == "clean"){   // clean last digit
+        cleanLast(b)
       }
-
-        // add numbers to variables and display it
-        if(signIsPressed){   // se tiver com operador adiciona segundo campo
-            if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "." || b.id == "sign"){
-              console.log("2 = " + calcLineDisplay2)
-
-              if(calcLineDisplay2.indexOf(".") == -1){    // só adiciona ponto se não existir  
-                calcLineDisplay2 += b.value;
-                calcLine2.innerText = calcLineDisplay2
-              } else {
-                if(b.value == "."){
-                  calcLine2.innerText = calcLineDisplay2
-                } else{
-                  calcLineDisplay2 += b.value;
-                  calcLine2.innerText = calcLineDisplay2
-                }
-              }
-            }
-        } else if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "." || b.id == "sign"){ // adiciona primeiro campo
-          console.log("1 = " + calcLineDisplay)
-          if(b.id == "sign"){ // troca sinal
-            if(calcLineDisplay.charAt(0) == "-"){
-              calcLineDisplay = calcLineDisplay.substring(1, calcLineDisplay.length)
-              calcLine.innerText = calcLineDisplay
-            } else if(calcLineDisplay.charAt(0) !== "-"){
-              calcLineDisplay = "-" + calcLineDisplay
-              calcLine.innerText = calcLineDisplay
-            }
-          }// sign end
-
-          if(calcLineDisplay.indexOf(".") == -1){          // só adiciona ponto se não existir
-            calcLineDisplay += b.value;
-            calcLine.innerText = calcLineDisplay
-          } else {
-            if(b.value == ".") {
-              calcLine.innerText = calcLineDisplay
-            } else {
-              calcLineDisplay += b.value;
-              calcLine.innerText = calcLineDisplay
-            }
-            
-          }
-        }
-        //add sign
-        if(/^minus|plus|multiply|divide$/gm.test(b.id)){
-          if(calcLine.innerText !== ""){ // só adiciona a operacao se tiver sido digitado o primeiro numero
-            signLineDisplay = b.value;
-            signLine.innerText = signLineDisplay
-            signIsPressed = true
-        }}
-        // resultado
-        if(b.id == "result"){ 
-            if(calcLineDisplay && calcLineDisplay2 && signIsPressed){
-                resultLineDisplay = calc(Number(calcLineDisplay),Number(calcLineDisplay2),signLineDisplay)
-                resultLine.innerText = resultLineDisplay
-                oldResult = resultLineDisplay;
-            }
-        } // end if result
-        if(b.id == "c"){
-          clearAll()
-        }
+      // add numbers to variables and display it
+      numbersDisplay(b)
+      
+      if(/^minus|plus|multiply|divide$/gm.test(b.id)){ //add sign
+        signDisplay(b)
+      }
+      if(b.id == "result"){  // add result
+        result(b)
+      }
+      if(b.id == "c"){ // clean all    
+        clearAll()
+      }
     }) // end event listener
 }) // end buttons for each
 
+function signDisplay(b){
+  if(calcLine.innerText !== ""){ // só adiciona a operacao se tiver sido digitado o primeiro numero
+    signLineDisplay = b.value;
+    signLine.innerText = signLineDisplay
+    signIsPressed = true
+  }
+}
+
+function result(b){
+  if(calcLineDisplay && calcLineDisplay2 && signIsPressed){
+    resultLineDisplay = calc(Number(calcLineDisplay),Number(calcLineDisplay2),signLineDisplay)
+    resultLine.innerText = resultLineDisplay
+    oldResult = resultLineDisplay;
+  }
+}
+
+function numbersDisplay(b){
+  if(signIsPressed){   // se tiver com operador adiciona segundo campo
+    if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "." || b.id == "sign"){
+      console.log("2 = " + calcLineDisplay2)
+
+      if(calcLineDisplay2.indexOf(".") == -1){    // só adiciona ponto se não existir  
+        calcLineDisplay2 += b.value;
+        calcLine2.innerText = calcLineDisplay2
+      } else {
+        if(b.value == "."){
+          calcLine2.innerText = calcLineDisplay2
+        } else{
+          calcLineDisplay2 += b.value;
+          calcLine2.innerText = calcLineDisplay2
+        }
+      }
+    }
+} else if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "." || b.id == "sign"){ // adiciona primeiro campo
+  console.log("1 = " + calcLineDisplay)
+  if(b.id == "sign"){ // troca sinal
+    if(calcLineDisplay.charAt(0) == "-"){
+      calcLineDisplay = calcLineDisplay.substring(1, calcLineDisplay.length)
+      calcLine.innerText = calcLineDisplay
+    } else if(calcLineDisplay.charAt(0) !== "-"){
+      calcLineDisplay = "-" + calcLineDisplay
+      calcLine.innerText = calcLineDisplay
+    }
+  }// sign end
+
+  if(calcLineDisplay.indexOf(".") == -1){          // só adiciona ponto se não existir
+    calcLineDisplay += b.value;
+    calcLine.innerText = calcLineDisplay
+  } else {
+    if(b.value == ".") {
+      calcLine.innerText = calcLineDisplay
+    } else {
+      calcLineDisplay += b.value;
+      calcLine.innerText = calcLineDisplay
+      }
+    }
+  }
+}
+
+function cleanLast(b){
+  if(calcLineDisplay2 !== ""){
+    calcLineDisplay2 = calcLineDisplay2.slice(0, -1)
+    calcLine2.innerText = calcLineDisplay2
+  } else if(signIsPressed){
+    signLine.innerText = ""
+    signIsPressed = false
+  }        
+  else {
+    if(calcLineDisplay !== ""){
+      calcLineDisplay = calcLineDisplay.slice(0, -1)
+      calcLine.innerText = calcLineDisplay
+    }
+  }
+}
 function clearAll(){
   calcLineDisplay = ""
   calcLineDisplay2 = ""
