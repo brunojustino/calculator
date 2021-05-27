@@ -131,7 +131,7 @@ function calc(n1,n2, sign){
     if(sign == "+") return add(n1,n2)
     if(sign == "-") return subtract(n1,n2)
     if(sign == "*") return multiply(n1,n2)
-    if(sign == "/") return divide(n1,n2)
+    if(sign == "/") return (divide(n1,n2) == "Infinity") ? clearAll() : divide(n1,n2)
 }
 
 function add (a,b) {
