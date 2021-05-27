@@ -56,44 +56,50 @@ function result(b){
 function numbersDisplay(b){
   if(signIsPressed){   // se tiver com operador adiciona segundo campo
     if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "." || b.id == "sign"){
-      console.log("2 = " + calcLineDisplay2)
-
       if(calcLineDisplay2.indexOf(".") == -1){    // só adiciona ponto se não existir  
-        calcLineDisplay2 += b.value;
-        calcLine2.innerText = calcLineDisplay2
+        addNumber2Display(b)
       } else {
         if(b.value == "."){
           calcLine2.innerText = calcLineDisplay2
         } else{
-          calcLineDisplay2 += b.value;
-          calcLine2.innerText = calcLineDisplay2
+          addNumber2Display(b)
         }
       }
     }
 } else if(/^[0-9]$/gm.test(parseInt(b.value)) || b.value == "." || b.id == "sign"){ // adiciona primeiro campo
-  console.log("1 = " + calcLineDisplay)
   if(b.id == "sign"){ // troca sinal
-    if(calcLineDisplay.charAt(0) == "-"){
-      calcLineDisplay = calcLineDisplay.substring(1, calcLineDisplay.length)
-      calcLine.innerText = calcLineDisplay
-    } else if(calcLineDisplay.charAt(0) !== "-"){
-      calcLineDisplay = "-" + calcLineDisplay
-      calcLine.innerText = calcLineDisplay
-    }
-  }// sign end
-
-  if(calcLineDisplay.indexOf(".") == -1){          // só adiciona ponto se não existir
-    calcLineDisplay += b.value;
-    calcLine.innerText = calcLineDisplay
+    signChange()
+  }
+  if(calcLineDisplay.indexOf(".") == -1){  // só adiciona ponto se não existir
+    addNumber1Display(b)
   } else {
     if(b.value == ".") {
       calcLine.innerText = calcLineDisplay
     } else {
-      calcLineDisplay += b.value;
-      calcLine.innerText = calcLineDisplay
+      addNumber1Display(b)
       }
     }
   }
+}
+
+function signChange(){
+  if(calcLineDisplay.charAt(0) == "-"){
+    calcLineDisplay = calcLineDisplay.substring(1, calcLineDisplay.length)
+    calcLine.innerText = calcLineDisplay
+  } else if(calcLineDisplay.charAt(0) !== "-"){
+    calcLineDisplay = "-" + calcLineDisplay
+    calcLine.innerText = calcLineDisplay
+  }
+}
+
+function addNumber1Display(b){
+  calcLineDisplay += b.value;
+  calcLine.innerText = calcLineDisplay
+}
+
+function addNumber2Display(b){
+  calcLineDisplay2 += b.value;
+  calcLine2.innerText = calcLineDisplay2
 }
 
 function cleanLast(b){
